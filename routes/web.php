@@ -87,6 +87,8 @@ Route::group(['prefix'=>'user'], function(){
   Route::group(['prefix'=>'attendance'], function(){
     Route::get('/', 'AttendanceController@index')->name('attendance.index');
     Route::get('/import', 'AttendanceController@attImport')->name('attn.import');
+    Route::get('/jobcard', 'AttendanceController@searchJobcard')->name('attn.jobcard');
+    Route::post('/jobcard', 'AttendanceController@getJobcard')->name('search.jobcard');
     Route::post('/excel', 'AttendanceController@importExcel')->name('excel.import');
     // Route::get('/create', 'AttendanceController@create')->name('attendance.create');
     // Route::post('/store', 'AttendanceController@store')->name('attendance.store');

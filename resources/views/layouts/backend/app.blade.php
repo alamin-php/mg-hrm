@@ -151,7 +151,7 @@
             <li><a href="{{ route('section.index') }}"><i class="fa fa-circle-o"></i> {{__("Section")}}</a></li>
             <li><a href="{{ route('desig.index') }}"><i class="fa fa-circle-o"></i> {{__("Designation")}}</a></li>
             <li><a href="{{ route('employee.index') }}"><i class="fa fa-circle-o"></i> {{__("Employee")}}</a></li>
-            <li><a href=""><i class="fa fa-circle-o"></i> {{__("Allotmant")}}</a></li>
+            <li><a href="{{ route('attn.jobcard') }}"><i class="fa fa-circle-o"></i> {{__("Job Card")}}</a></li>
             </li>
           </ul>
         </li>

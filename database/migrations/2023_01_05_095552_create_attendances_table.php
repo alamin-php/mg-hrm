@@ -18,10 +18,10 @@ class CreateAttendancesTable extends Migration
             $table->integer('empid');
             $table->string('name')->nullable();
             $table->string('date')->nullable();
-            $table->string('intime')->nullable();
-            $table->string('outtime')->nullable();
-            $table->string('late')->nullable();
-            $table->string('erlayout')->nullable();
+            $table->time('intime')->nullable();
+            $table->time('outtime')->nullable();
+            $table->time('late')->nullable();
+            $table->time('erlayout')->nullable();
             $table->timestamps();
         });
     }

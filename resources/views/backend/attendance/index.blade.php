@@ -29,7 +29,7 @@
                         data-target="#addModal"><i class="fa fa-plus"></i> Create</a>
                 </div>
                 <div class="box-body table-responsive">
-                    <table class="table table-bordered table-sm ytable">
+                    <table id="example1" class="table table-bordered table-sm ytable">
                         <thead>
                             <tr>
                                 <th>Employee Id</th>
@@ -39,18 +39,50 @@
                                 <th>Out Time</th>
                                 <th>Late</th>
                                 <th>Erlyout</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($data as $row)
                             <tr>
-                                <td>{{ $row->empid}}</td>
+                                <td width="30px">{{ $row->empid}}</td>
                                 <td>{{ $row->date}}</td>
                                 <td>{{ $row->name}}</td>
-                                <td>{{ $row->intime}}</td>
-                                <td>{{ $row->outtime}}</td>
-                                <td>{{ $row->late}}</td>
-                                <td>{{ $row->erlayout}}</td>
+                                <td>
+                                    @if (!$row->intime)
+                                        0.00
+                                    @else
+                                    {{ $row->intime}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (!$row->outtime)
+                                        0.00
+                                    @else
+                                    {{ $row->outtime}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (!$row->late)
+                                        0.00
+                                    @else
+                                    {{ $row->late}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (!$row->erlayout)
+                                        0.00
+                                    @else
+                                    {{ $row->erlayout}}
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (!$row->intime && !$row->outtime)
+                                        <strong class="text-danger">Absent</strong>
+                                        @else
+                                        <span class="text-success">Present</span>
+                                    @endif
+                                </td>
                             </tr>
 
                             @endforeach
@@ -73,5 +105,16 @@
         <script src="{{ asset('public/backend') }}/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
         <script src="{{ asset('public/backend') }}/bower_components/PACE/pace.min.js"></script>
         <script>
-        </script>
+            $(function () {
+              $('#example1').DataTable()
+              $('#example2').DataTable({
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : false,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : false
+              })
+            })
+          </script>
     @endpush

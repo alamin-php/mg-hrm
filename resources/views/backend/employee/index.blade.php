@@ -132,7 +132,7 @@
                     <h4 class="modal-title text-center">Add Employee</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('attn.import') }}" method="post" id="upload_form"
+                    <form action="{{ route('excel.import') }}" method="post" id="upload_form"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="row">

@@ -17,4 +17,7 @@ class Attendance extends Model
         'late',
         'erlayout',
     ];
+    public function getFromDateAttribute($value) {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
 }

@@ -23,11 +23,15 @@
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-aqua"><i class="fa fa-tasks"></i></span>
+            <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">{{__("Current Users")}}</span>
-              <span class="info-box-number">12</span>
+              <span class="info-box-text">{{__("Today Present")}}</span>
+              @php
+              $today = date('Y-m-d');
+                  $today_attn = DB::table('attendances')->where('date', $today)->whereNotNull('intime')->count();
+              @endphp
+              <span class="info-box-number">{{ $today_attn }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -36,11 +40,15 @@
         <!-- /.col -->
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-red"><i class="fa fa-shopping-cart"></i></span>
+            <span class="info-box-icon bg-red"><i class="fa fa-user"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">{{__("Today Sales")}}</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-text">{{__("Today Absent")}}</span>
+              @php
+              $today = date('Y-m-d');
+                  $today_absent = DB::table('attendances')->where('date', $today)->whereNull('intime')->count();
+              @endphp
+              <span class="info-box-number">{{ $today_absent }}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
