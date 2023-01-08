@@ -36,11 +36,11 @@
                                     <label for="upload">Select Employee</label>
                                     <select name="empid" id="" class="form-control input-sm">
                                         @php
-                                            $empname = DB::table('attendances')->select('empid','name')->groupBy('empid','name')->get();
+                                            $empname = DB::table('employees')->select('empid','name')->where('status', true)->get();
                                         @endphp
                                         <option value="">Select One</option>
                                         @foreach ($empname as $row)
-                                        <option value="{{ $row->empid }}" required>{{ $row->name }}</option>
+                                        <option value="{{ $row->empid }}" required>{{ $row->empid }}-{{ $row->name }}</option>
 
                                         @endforeach
                                     </select>

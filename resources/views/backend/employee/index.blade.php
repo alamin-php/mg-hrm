@@ -27,8 +27,6 @@
                     <h3 class="box-title">All Employee</h3>
                     <a href="" class="btn btn-primary btn-sm pull-right addModal" data-toggle="modal"
                         data-target="#addModal"><i class="fa fa-plus"></i> Create</a>
-                    <a href="" class="btn btn-primary btn-sm pull-right uploadModal" data-toggle="modal"
-                        data-target="#uploadModal"><i class="fa fa-plus"></i> Upload</a>
                 </div>
                 <div class="box-body table-responsive">
                     <table class="table table-bordered table-sm ytable">
@@ -66,6 +64,16 @@
                 <div class="modal-body">
                     <form action="{{ route('employee.store') }}" method="post" id="add_form">
                         @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="empid">ID No</label>
+                                    <input type="number" name="empid" id="empid" class="form-control form-control-sm"
+                                        placeholder="Enter employee id">
+                                    <span class="text-danger error-text empid"></span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -110,37 +118,6 @@
                                     <label for="empName">Employee name</label>
                                     <input type="text" name="name" id="empName" class="form-control form-control-sm"
                                         placeholder="Enter employeename">
-                                    <span class="text-danger error-text name_error"></span>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit">Submit</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Upload Modal -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="addModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title text-center">Add Employee</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('excel.import') }}" method="post" id="upload_form"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="upload">Upload Attan.</label>
-                                    <input type="file" name="att_upload" id="upload"
-                                        class="form-control form-control-sm">
                                     <span class="text-danger error-text name_error"></span>
                                 </div>
                             </div>

@@ -61,11 +61,14 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="fa fa-line-chart"></i></span>
+            <span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">{{__("Current Month Sales")}}</span>
-              <span class="info-box-number">2,34,444</span>
+                @php
+                    $empname = DB::table('employees')->select('empid','name')->where('status', true)->count();
+                @endphp
+              <span class="info-box-text">{{__("Active Employee")}}</span>
+              <span class="info-box-number">{{$empname}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>

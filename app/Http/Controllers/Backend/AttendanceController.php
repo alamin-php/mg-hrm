@@ -13,7 +13,10 @@ class AttendanceController extends Controller
     public function index()
     {
         // $data = DB::table('attendances')->select('date')->groupBy('date')->get();
-        $data = DB::table('attendances')->where('empid', '1')->get();
+        $data = DB::table('attendances')
+        ->leftJoin('employees', 'attendances.empid', 'employees.empid')
+        ->select('employees.*', 'attendances.*')
+        ->get();
         return view('backend.attendance.index', compact('data'));
     }
 
@@ -40,12 +43,20 @@ class AttendanceController extends Controller
         $empid = $request->empid;
         $frm_date = $request->frm_date;
         $to_date = $request->to_date;
-        $employee = DB::table('attendances')->where('empid', $empid)->first();
-        $search = DB::table('attendances')->select()
-        ->where('empid', $empid)
-        ->where('date', '>=', $frm_date)
-        ->where('date', '<=', $to_date)
+        // dd($request->all());
+        $employee = DB::table('attendances')
+        ->leftJoin('employees', 'attendances.empid', 'employees.empid')
+        ->leftJoin('designations', 'employees.desig_id', 'designations.id')
+        ->leftJoin('sections', 'employees.section_id', 'sections.id')
+        ->select('employees.*', 'employees.name as emp_name', 'designations.desig_name','sections.section_name', 'attendances.*')
+        ->where('employees.empid', $empid)->first();
+        $search = DB::table('attendances')->leftJoin('employees', 'attendances.empid', 'employees.empid')
+        ->select('employees.*', 'attendances.*')
+        ->where('employees.empid', $empid)
+        ->where('attendances.date', '>=', $frm_date)
+        ->where('attendances.date', '<=', $to_date)
         ->get();
+        // dd($search);
         return view('backend.employee.getjobcard', compact('search', 'employee'));
     }
 }

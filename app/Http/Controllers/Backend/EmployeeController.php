@@ -69,12 +69,14 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name'=>'required|string|unique:employees'
+            'empid'=>'required|unique:employees',
+            'name'=>'required|string'
         ]);
         if(!$validator->passes()){
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
         }else{
             $values = [
+                'empid'=>$request->empid,
                 'unit_id'=>$request->unit_id,
                 'section_id'=>$request->section_id,
                 'desig_id'=>$request->desig_id,

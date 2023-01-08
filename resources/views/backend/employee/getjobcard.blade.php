@@ -31,8 +31,10 @@
             <div class="box-body">
                 <div class="emp-details">
                 <p>ID No: {{$employee->empid}}</p>
-                <p>Name: {{$employee->name}}</p>
-                <p>Designation: Asst. Manager</p>
+                <p>Name: {{$employee->emp_name}}</p>
+                <p>Designation: {{$employee->desig_name}}</p>
+                <p>Section: {{$employee->section_name}}</p>
+                {{-- <p>Designation: Asst. Manager</p> --}}
                 </div>
                 <table class="table table-sm">
                     <thead>
@@ -41,7 +43,6 @@
                             <th>In Time</th>
                             <th>Out Time</th>
                             <th>Late</th>
-                            <th>Erlyout</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -54,35 +55,23 @@
                                 @if (!$row->intime)
                                     0.00
                                 @else
-                                {{ \Carbon\Carbon::parse($row->intime)->format('h:m A')}}
+                                {{\Carbon\Carbon::createFromFormat('H:i:s',$row->intime)->format('h:i a')}}
                                 @endif
                             </td>
                             <td>
                                 @if (!$row->outtime)
                                     0.00
                                 @else
-                                {{ \Carbon\Carbon::parse($row->outtime)->format('h:m A')}}
+                                {{\Carbon\Carbon::createFromFormat('H:i:s',$row->outtime)->format('h:i a')}}
                                 @endif
                             </td>
-                            <td>
-                                @if (!$row->late)
-                                    0.00
-                                @else
-                                {{ $row->late}}
-                                @endif
-                            </td>
-                            <td>
-                                @if (!$row->erlayout)
-                                    0.00
-                                @else
-                                {{ \Carbon\Carbon::parse($row->erlayout)->format('h:m')}}
-                                @endif
+                            <td>@if (!$row->late)0.00 @else Late @endif
                             </td>
                             <td>
                                 @if (!$row->intime && !$row->outtime)
                                     <strong class="text-danger">Absent</strong>
                                     @else
-                                    <span class="text-success">Present</span>
+                                    <strong class="text-success">Present</strong>
                                 @endif
                             </td>
                         </tr>
