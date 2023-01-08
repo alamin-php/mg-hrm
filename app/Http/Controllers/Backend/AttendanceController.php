@@ -46,9 +46,10 @@ class AttendanceController extends Controller
         // dd($request->all());
         $employee = DB::table('attendances')
         ->leftJoin('employees', 'attendances.empid', 'employees.empid')
+        ->leftJoin('units', 'employees.unit_id', 'units.id')
         ->leftJoin('designations', 'employees.desig_id', 'designations.id')
         ->leftJoin('sections', 'employees.section_id', 'sections.id')
-        ->select('employees.*', 'employees.name as emp_name', 'designations.desig_name','sections.section_name', 'attendances.*')
+        ->select('employees.*', 'employees.name as emp_name', 'units.unit_name', 'designations.desig_name','sections.section_name', 'attendances.*')
         ->where('employees.empid', $empid)->first();
         $search = DB::table('attendances')->leftJoin('employees', 'attendances.empid', 'employees.empid')
         ->select('employees.*', 'attendances.*')

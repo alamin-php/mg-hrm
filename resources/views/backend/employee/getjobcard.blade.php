@@ -20,76 +20,135 @@
         </section>
 
         <!-- Main content -->
+
         <section class="content">
-<div class="row">
-    <div class="col-md-8 col-sm-offset-2">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Employee Job Card</h3>
-                <a href="{{ route('attn.jobcard')}}" class="btn btn-primary btn-sm pull-right"><i class="fa fa-search"></i> Search More</a>
-            </div>
-            <div class="box-body">
-                <div class="emp-details">
-                <p>ID No: {{$employee->empid}}</p>
-                <p>Name: {{$employee->emp_name}}</p>
-                <p>Designation: {{$employee->desig_name}}</p>
-                <p>Section: {{$employee->section_name}}</p>
-                {{-- <p>Designation: Asst. Manager</p> --}}
+            <div class="row">
+                <div class="col-md-8 col-sm-offset-2">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Search Job Card</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <form action="{{ route('search.jobcard') }}" method="POST">
+                                    @csrf
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="upload">Select Employee</label>
+                                            <select name="empid" id="" class="form-control input-sm">
+                                                @php
+                                                    $empname = DB::table('employees')
+                                                        ->select('empid', 'name')
+                                                        ->where('status', true)
+                                                        ->get();
+                                                @endphp
+                                                <option value="">Select One</option>
+                                                @foreach ($empname as $row)
+                                                    <option value="{{ $row->empid }}" required>
+                                                        {{ $row->empid }}-{{ $row->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="upload">From date</label>
+                                            <input type="date" name="frm_date" placeholder="Enter id no"
+                                                class="form-control input-sm" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="upload">To date</label>
+                                            <input type="date" name="to_date" placeholder="Enter id no"
+                                                class="form-control input-sm" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="upload">Status</label>
+                                                <select name="" id="" class="form-control input-sm">
+                                                    <option value="">==Select One==</option>
+                                                    <option value="">Present</option>
+                                                    <option value="">Absent</option>
+                                                    <option value="">Late</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm pull-right"><i class="fa fa-search"></i>
+                                Search Job Card</button>
+                            </form>
+                        </div>
+                        <div class="box-footer">
+                            <div class="employee-details">
+                                <span>{{ $employee->unit_name }}</span>
+                                <p>Employee ID: {{ $employee->empid }}</p>
+                                <p>Employee Name: {{ $employee->emp_name }}</p>
+                                <p>Designation: {{ $employee->desig_name }}</p>
+                                <p>Section: {{ $employee->section_name }}</p>
+                            </div>
+                            <div class="job-card">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="40px">SL No</th>
+                                            <th>Date</th>
+                                            <th>In Time</th>
+                                            <th>Out Time</th>
+                                            <th>Late</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($search as $row)
+                                        <tr>
+                                            <td>{{$loop->index+1}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($row->date)->format('d-M-Y') }}</td>
+                                            <td>
+                                                @if (!$row->intime)
+                                                    0.00
+                                                @else
+                                                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->intime)->format('h:i a') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (!$row->outtime)
+                                                    0.00
+                                                @else
+                                                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->outtime)->format('h:i a') }}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (!$row->late)
+                                                    0.00
+                                                @else
+                                                    Late
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if (!$row->intime && !$row->outtime)
+                                                    <strong class="text-danger">A</strong>
+                                                @else
+                                                    <strong class="text-success">P</strong>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>In Time</th>
-                            <th>Out Time</th>
-                            <th>Late</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($search as $row)
-                        <tr>
-                            {{-- <td>{{ $row->date}}</td> --}}
-                            <td>{{ \Carbon\Carbon::parse($row->date)->format('d-M-Y')}}</td>
-                            <td>
-                                @if (!$row->intime)
-                                    0.00
-                                @else
-                                {{\Carbon\Carbon::createFromFormat('H:i:s',$row->intime)->format('h:i a')}}
-                                @endif
-                            </td>
-                            <td>
-                                @if (!$row->outtime)
-                                    0.00
-                                @else
-                                {{\Carbon\Carbon::createFromFormat('H:i:s',$row->outtime)->format('h:i a')}}
-                                @endif
-                            </td>
-                            <td>@if (!$row->late)0.00 @else Late @endif
-                            </td>
-                            <td>
-                                @if (!$row->intime && !$row->outtime)
-                                    <strong class="text-danger">Absent</strong>
-                                    @else
-                                    <strong class="text-success">Present</strong>
-                                @endif
-                            </td>
-                        </tr>
-
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
-        </div>
-    </div>
-</div>
-
-
         </section>
+
         <!-- /.content -->
     </div>
-        @endsection
+@endsection
 
-    @push('js')
-
-    @endpush
+@push('js')
+@endpush

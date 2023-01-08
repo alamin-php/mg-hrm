@@ -1,30 +1,80 @@
-.skin-blue .main-header .navbar .nav>li>a:hover, .skin-blue .main-header .navbar .nav>li>a:active, .skin-blue .main-header .navbar .nav>li>a:focus, .skin-blue .main-header .navbar .nav .open>a, .skin-blue .main-header .navbar .nav .open>a:hover, .skin-blue .main-header .navbar .nav .open>a:focus, .skin-blue .main-header .navbar .nav>.active>a {
+.skin-blue .main-header .navbar .nav>li>a:hover,
+.skin-blue .main-header .navbar .nav>li>a:active,
+.skin-blue .main-header .navbar .nav>li>a:focus,
+.skin-blue .main-header .navbar .nav .open>a,
+.skin-blue .main-header .navbar .nav .open>a:hover,
+.skin-blue .main-header .navbar .nav .open>a:focus,
+.skin-blue .main-header .navbar .nav>.active>a {
     clear: both;
     overflow: hidden;
 }
+
 .navbar-nav>.user-menu .user-image {
     width: 22px;
     height: 22px;
 }
+
 .swal2-popup {
     font-size: 1.6rem !important;
 }
 
 .modal {
     text-align: center;
-    padding: 0!important;
-  }
+    padding: 0 !important;
+}
 
-  .modal:before {
+.modal:before {
     content: '';
     display: inline-block;
     height: 100%;
     vertical-align: middle;
     margin-right: -4px;
-  }
+}
 
-  .modal-dialog {
+.modal-dialog {
     display: inline-block;
     text-align: left;
     vertical-align: middle;
-  }
+}
+
+/* Job card css  */
+.job-card {}
+
+.job-card table {
+    width: 100%;
+}
+
+.job-card table thead {
+    border-bottom: 1px solid #000;
+}
+
+.job-card table thead tr {}
+
+.job-card table thead tr th {
+    text-align: center;
+}
+
+.job-card table tbody tr {
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+.job-card table tbody tr:last-child {
+    border-bottom: 0px solid #ddd;
+}
+
+.job-card table tbody tr td {
+    padding: 3px 0px;
+}
+
+.employee-details {
+    text-align: center;
+    margin-bottom: 15px !important;
+}
+.employee-details span {
+    font-size: 32px;
+}
+.employee-details p {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
