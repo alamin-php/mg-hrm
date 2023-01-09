@@ -27,10 +27,19 @@ class AttendanceController extends Controller
 
     public function importExcel(Request $request)
     {
-        $path = $request->file('file')->getRealPath();
-        Excel::import(new AttendancesImport, $path);
-        // Excel::import(new AttendancesImport,
-        //               $request->file('file')->store('files'));
+        $select_date = $request->select_date;
+        $date = DB::table('attendances')->where('date', $select_date)->delete();
+
+
+        if($date){
+            $path = $request->file('file')->getRealPath();
+            Excel::import(new AttendancesImport, $path);
+        }else{
+            $path = $request->file('file')->getRealPath();
+            Excel::import(new AttendancesImport, $path);
+        }
+        // $path = $request->file('file')->getRealPath();
+        //     Excel::import(new AttendancesImport, $path);
         return redirect()->back();
     }
 
@@ -54,9 +63,10 @@ class AttendanceController extends Controller
         $search = DB::table('attendances')->leftJoin('employees', 'attendances.empid', 'employees.empid')
         ->select('employees.*', 'attendances.*')
         ->where('employees.empid', $empid)
-        ->where('attendances.date', '>=', $frm_date)
-        ->where('attendances.date', '<=', $to_date)
-        ->get();
+        // ->where('attendances.date', '>=', $frm_date)
+        // ->where('attendances.date', '<=', $to_date)
+        ->whereBetween('attendances.date', [$frm_date, $to_date])
+        ->get()->unique('date');
         // dd($search);
         return view('backend.employee.getjobcard', compact('search', 'employee'));
     }

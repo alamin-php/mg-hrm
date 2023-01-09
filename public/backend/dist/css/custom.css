@@ -58,10 +58,6 @@
     border-bottom: 1px solid #ddd;
     text-align: center;
 }
-.job-card table tbody tr:last-child {
-    border-bottom: 0px solid #ddd;
-}
-
 .job-card table tbody tr td {
     padding: 3px 0px;
 }

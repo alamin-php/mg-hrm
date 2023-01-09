@@ -23,7 +23,7 @@
 
         <section class="content">
             <div class="row">
-                <div class="col-md-8 col-sm-offset-2">
+                <div class="col-md-10 col-sm-offset-1">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">Search Job Card</h3>
@@ -83,12 +83,31 @@
                             </form>
                         </div>
                         <div class="box-footer">
-                            <div class="employee-details">
-                                <span>{{ $employee->unit_name }}</span>
-                                <p>Employee ID: {{ $employee->empid }}</p>
-                                <p>Employee Name: {{ $employee->emp_name }}</p>
-                                <p>Designation: {{ $employee->desig_name }}</p>
-                                <p>Section: {{ $employee->section_name }}</p>
+                            <div class="employee-details" style="margin-bottom: 20px">
+                                <span>Mamun Group</span>
+                                <p><b>Job Card</b></p>
+                                <p>Date is between <?php echo $_POST['frm_date']?> and <?php echo $_POST['to_date']?>, Employee is {{ $employee->emp_name }}</p>
+                            </div>
+                            <div class="row" style="margin-bottom: 10px">
+                                <div class="col-md-6">
+                                    <strong>Employee Name: {{ $employee->emp_name }}</strong><br>
+                                    <span>Department: {{ $employee->section_name }}</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Designation: {{ $employee->desig_name }}</strong><br>
+                                    <span>Section / Unit: {{ $employee->unit_name }}</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Employee Code: {{ $employee->empid }}</strong><br>
+                                    <span>
+                                        Status: @if ($employee->status == true)
+                                            Active
+                                        @else
+                                        Inactive
+                                        @endif
+
+                                    </span>
+                                </div>
                             </div>
                             <div class="job-card">
                                 <table>
@@ -96,6 +115,7 @@
                                         <tr>
                                             <th width="40px">SL No</th>
                                             <th>Date</th>
+                                            <th>Day</th>
                                             <th>In Time</th>
                                             <th>Out Time</th>
                                             <th>Late</th>
@@ -108,22 +128,25 @@
                                             <td>{{$loop->index+1}}</td>
                                             <td>{{ \Carbon\Carbon::parse($row->date)->format('d-M-Y') }}</td>
                                             <td>
+                                                {{date('l', strtotime($row->date))}}
+                                            </td>
+                                            <td>
                                                 @if (!$row->intime)
-                                                    0.00
+                                                    0.0
                                                 @else
                                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->intime)->format('h:i a') }}
                                                 @endif
                                             </td>
                                             <td>
                                                 @if (!$row->outtime)
-                                                    0.00
+                                                    0.0
                                                 @else
                                                     {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->outtime)->format('h:i a') }}
                                                 @endif
                                             </td>
                                             <td>
                                                 @if (!$row->late)
-                                                    0.00
+                                                    0.0
                                                 @else
                                                     Late
                                                 @endif
@@ -138,6 +161,25 @@
                                         </tr>
                                         @endforeach
                                     </tbody>
+                                    <tfoot>
+                                        <tr style="margin-top: 10px">
+                                            <th colspan="7">
+                                                <p>Summary</p>
+                                                <table>
+                                                    @php
+                                                        $day = $search->count('date');
+                                                        $late = $search->count('late');
+                                                    @endphp
+                                                    <tr style="border: 1px solid #ddd; padding: 3px">
+                                                        <th>Total Days: {{$day}}</th>
+                                                        <th>Total Absent: 2</th>
+                                                        <th>Total Late: {{$late}}</th>
+                                                        <th>Total Erlyout: 0.0</th>
+                                                    </tr>
+                                                </table>
+                                            </th>
+                                        </tr>
+                                        </tfoot>
                                 </table>
                             </div>
                         </div>

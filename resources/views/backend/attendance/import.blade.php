@@ -28,26 +28,35 @@
                     <a href="" class="btn btn-primary btn-sm pull-right addModal" data-toggle="modal"
                         data-target="#addModal"><i class="fa fa-plus"></i> Create</a>
                 </div>
-                <form action="{{ route('excel.import') }}" method="post" id="add_form" enctype="multipart/form-data">
-                    @csrf
-                    <div class="form-group">
-                        <label for="designationName">Upload File</label>
-                        <input type="file" class="form-control form-control-sm" name="file" id="designationName">
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit">Submit</button>
-            </div>
-            </form>
-            </div>
+                <div class="box-body">
+                    <form action="{{ route('excel.import') }}" method="post" id="add_form" enctype="multipart/form-data">
+                        @csrf
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="date">Select Date</label>
+                                <input type="date" name="select_date" class="form-control form-control-sm">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="designationName">Upload File</label>
+                                <input type="file" class="form-control form-control-sm" name="file" id="designationName">
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit">Submit</button>
+                </div>
+                </form>
 
-        </section>
-        <!-- /.content -->
+                </div>
     </div>
-    @endsection
 
-    @push('js')
-        <script>
-        </script>
-    @endpush
+    </section>
+    <!-- /.content -->
+    </div>
+@endsection
+
+@push('js')
+    <script></script>
+@endpush
