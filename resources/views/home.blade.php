@@ -26,10 +26,14 @@
             <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">{{__("Today Present")}}</span>
+              <a href="{{ route('attendance.today') }}"><span class="info-box-text">{{__("Today Present")}}</span></a>
               @php
               $today = date('Y-m-d');
-                  $today_attn = DB::table('attendances')->where('date', $today)->whereNotNull('intime')->count();
+                  $today_attn = DB::table('employees')
+                  ->leftJoin('attendances', 'employees.empid', 'attendances.empid')
+                  ->select('employees.*', 'attendances.*')
+                  ->where('employees.status', true)
+                  ->where('attendances.date', $today)->whereNotNull('attendances.intime')->count();
               @endphp
               <span class="info-box-number">{{ $today_attn }}</span>
             </div>
@@ -46,7 +50,10 @@
               <span class="info-box-text">{{__("Today Absent")}}</span>
               @php
               $today = date('Y-m-d');
-                  $today_absent = DB::table('attendances')->where('date', $today)->whereNull('intime')->count();
+                  $today_absent = DB::table('employees')
+                  ->leftJoin('attendances', 'employees.empid', 'attendances.empid')
+                  ->select('employees.*', 'attendances.*')
+                  ->where('attendances.date', $today)->whereNull('attendances.intime')->count();
               @endphp
               <span class="info-box-number">{{ $today_absent }}</span>
             </div>

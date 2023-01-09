@@ -90,7 +90,7 @@ Route::group(['prefix'=>'user'], function(){
     Route::get('/jobcard', 'AttendanceController@searchJobcard')->name('attn.jobcard');
     Route::post('/jobcard', 'AttendanceController@getJobcard')->name('search.jobcard');
     Route::post('/excel', 'AttendanceController@importExcel')->name('excel.import');
-    // Route::get('/create', 'AttendanceController@create')->name('attendance.create');
+    Route::get('/today-present', 'AttendanceController@todayPresent')->name('attendance.today');
     // Route::post('/store', 'AttendanceController@store')->name('attendance.store');
     // Route::get('/edit/{id}', 'AttendanceController@edit');
     // Route::get('/status_update/{id}', 'AttendanceController@activeAndDeactive');

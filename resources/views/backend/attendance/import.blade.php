@@ -29,7 +29,7 @@
                         data-target="#addModal"><i class="fa fa-plus"></i> Create</a>
                 </div>
                 <div class="box-body">
-                    <form action="{{ route('excel.import') }}" method="post" id="add_form" enctype="multipart/form-data">
+                    <form action="{{ route('excel.import') }}" method="post" id="upload_form" enctype="multipart/form-data">
                         @csrf
                         <div class="col-md-6">
                             <div class="form-group">
@@ -45,7 +45,7 @@
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-sm" id="btnSubmit">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="btnUpload"><i class="fa fa-upload"></i></button>
                 </div>
                 </form>
 
@@ -58,5 +58,5 @@
 @endsection
 
 @push('js')
-    <script></script>
+
 @endpush

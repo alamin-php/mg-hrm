@@ -66,8 +66,22 @@ class AttendanceController extends Controller
         // ->where('attendances.date', '>=', $frm_date)
         // ->where('attendances.date', '<=', $to_date)
         ->whereBetween('attendances.date', [$frm_date, $to_date])
+        ->orderBy('date', 'ASC')
         ->get()->unique('date');
         // dd($search);
         return view('backend.employee.getjobcard', compact('search', 'employee'));
+    }
+    public function todayPresent()
+    {
+        $today = date('Y-m-d');
+        $todayPresent = DB::table('attendances')->leftJoin('employees', 'attendances.empid', 'employees.empid')
+        ->leftJoin('designations', 'employees.desig_id', 'designations.id')
+        ->leftJoin('sections', 'employees.section_id', 'sections.id')
+        ->select('employees.name as emp_name','designations.desig_name','sections.section_name', 'attendances.*')
+        ->where('attendances.date', $today)
+        ->whereNotNull('attendances.intime')
+        ->orderBy('date', 'ASC')
+        ->get();
+        return view('backend.attendance.today_present', compact('todayPresent'));
     }
 }

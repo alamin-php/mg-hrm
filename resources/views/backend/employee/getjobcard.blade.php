@@ -148,7 +148,7 @@
                                                 @if (!$row->late)
                                                     0.0
                                                 @else
-                                                    Late
+                                                    <strong class="text-danger">L</strong>
                                                 @endif
                                             </td>
                                             <td>
