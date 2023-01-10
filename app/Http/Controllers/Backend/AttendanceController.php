@@ -60,8 +60,10 @@ class AttendanceController extends Controller
         ->leftJoin('sections', 'employees.section_id', 'sections.id')
         ->select('employees.*', 'employees.name as emp_name', 'units.unit_name', 'designations.desig_name','sections.section_name', 'attendances.*')
         ->where('employees.empid', $empid)->first();
-        $search = DB::table('attendances')->leftJoin('employees', 'attendances.empid', 'employees.empid')
-        ->select('employees.*', 'attendances.*')
+        $search = DB::table('attendances')
+        ->leftJoin('employees', 'attendances.empid', 'employees.empid')
+        ->leftJoin('manualattn', 'employees.empid', 'manualattn.empid')
+        ->select('employees.*', 'attendances.*', 'manualattn.intime as mintime', 'manualattn.intime as mouttime')
         ->where('employees.empid', $empid)
         // ->where('attendances.date', '>=', $frm_date)
         // ->where('attendances.date', '<=', $to_date)
@@ -83,5 +85,25 @@ class AttendanceController extends Controller
         ->orderBy('date', 'ASC')
         ->get();
         return view('backend.attendance.today_present', compact('todayPresent'));
+    }
+
+    // Manual Attendance
+    public function manualAttendance()
+    {
+        return view('backend.attendance.manual_attendance');
+    }
+    public function manualAttenStore(Request $request)
+    {
+       date_default_timezone_set('Asia/Dhaka');
+       $data = array();
+       $data['date'] = $request->date;
+       $data['empid'] = $request->empid;
+       $data['intime'] = $request->intime;
+       $data['outtime'] = $request->outtime;
+       $data['created_at'] = date('Y-m-d');
+       $query = DB::table('manualattn')->insert($data);
+       if($query){
+        return redirect()->back();
+       }
     }
 }

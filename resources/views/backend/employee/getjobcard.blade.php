@@ -131,17 +131,21 @@
                                                 {{date('l', strtotime($row->date))}}
                                             </td>
                                             <td>
-                                                @if (!$row->intime)
-                                                    0.0
-                                                @else
-                                                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->intime)->format('h:i a') }}
-                                                @endif
+                                            @if($row->intime)
+                                            {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->intime)->format('h:i a') }}
+                                            @elseif($row->mintime)
+                                                {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->mintime)->format('h:i a') }}
+                                            @else
+                                            0.0
+                                            @endif
                                             </td>
                                             <td>
-                                                @if (!$row->outtime)
-                                                    0.0
+                                                @if($row->outtime)
+                                                {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->outtime)->format('h:i a') }}
+                                                @elseif($row->mouttime)
+                                                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->mouttime)->format('h:i a') }}
                                                 @else
-                                                    {{ \Carbon\Carbon::createFromFormat('H:i:s', $row->outtime)->format('h:i a') }}
+                                                0.0
                                                 @endif
                                             </td>
                                             <td>
@@ -153,7 +157,12 @@
                                             </td>
                                             <td>
                                                 @if (!$row->intime && !$row->outtime)
+                                                    @if($row->mintime)
+                                                    <strong class="text-danger">M</strong>
+                                                    @else
                                                     <strong class="text-danger">A</strong>
+                                                    @endif
+
                                                 @else
                                                     <strong class="text-success">P</strong>
                                                 @endif

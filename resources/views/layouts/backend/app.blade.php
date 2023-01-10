@@ -153,6 +153,7 @@
             <li><a href="{{ route('employee.index') }}"><i class="fa fa-circle-o"></i> {{__("Employee")}}</a></li>
             <li><a href="{{ route('attn.import') }}"><i class="fa fa-circle-o"></i> {{__("Data Upload")}}</a></li>
             <li><a href="{{ route('attn.jobcard') }}"><i class="fa fa-circle-o"></i> {{__("Job Card")}}</a></li>
+            <li><a href="{{ route('attn.manual') }}"><i class="fa fa-circle-o"></i> {{__("Manual Attendance")}}</a></li>
             </li>
           </ul>
         </li>
